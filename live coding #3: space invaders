@@ -91,3 +91,85 @@ function keyPressed() {
 
 ********************************************************************
 
+//drop.js
+function Drop(x, y) {
+  this.x = x;
+  this.y = y;
+  this.r = 8;
+  this.toDelete = false;
+
+  this.show = function() {
+    noStroke();
+    fill(150, 0, 255);
+    ellipse(this.x, this.y, this.r * 2, this.r * 2);
+  };
+
+  this.evaporate = function() {
+    this.toDelete = true;
+  };
+
+  this.hits = function(flower) {
+    var d = dist(this.x, this.y, flower.x, flower.y);
+    if (d < this.r + flower.r) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  this.move = function() {
+    this.y = this.y - 5;
+  };
+}
+
+********************************************************************
+
+//flower.js
+function Flower(x, y) {
+  this.x = x;
+  this.y = y;
+  this.r = 30;
+
+  this.xdir = 1;
+
+  this.grow = function() {
+    this.r = this.r + 2;
+  };
+
+  this.shiftDown = function() {
+    this.xdir *= -1;
+    this.y += this.r;
+  };
+
+  this.move = function() {
+    this.x = this.x + this.xdir;
+  };
+
+  this.show = function() {
+    noStroke();
+    fill(255, 0, 200, 150);
+    ellipse(this.x, this.y, this.r * 2, this.r * 2);
+  };
+}
+
+********************************************************************
+
+//ship.js
+function Ship() {
+  this.x = width / 2;
+  this.xdir = 0;
+
+  this.show = function() {
+    fill(255);
+    rectMode(CENTER);
+    rect(this.x, height - 20, 20, 60);
+  };
+
+  this.setDir = function(dir) {
+    this.xdir = dir;
+  };
+
+  this.move = function(dir) {
+    this.x += this.xdir * 5;
+  };
+}
